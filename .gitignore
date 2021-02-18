@@ -7,3 +7,13 @@
 /captures
 .externalNativeBuild
 .cxx
+app/single/output-metadata.json
+app/single/app-single.apk
+app/schemas/com.kidozh.discuzhub.database.ViewHistoryDatabase/3.json
+app/schemas/com.kidozh.discuzhub.database.UserDatabase/3.json
+app/schemas/com.kidozh.discuzhub.database.UploadAttachmentDatabase/2.json
+app/schemas/com.kidozh.discuzhub.database.ThreadDraftDatabase/4.json
+app/schemas/com.kidozh.discuzhub.database.SmileyDatabase/6.json
+app/schemas/com.kidozh.discuzhub.database.FavoriteThreadDatabase/4.json
+app/schemas/com.kidozh.discuzhub.database.FavoriteForumDatabase/2.json
+app/schemas/com.kidozh.discuzhub.database.DiscuzDatabase/5.json
