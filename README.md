@@ -1,18 +1,20 @@
-# DiscuzHub
+# Mario Forever 社区
 
-轻量级Discuz X论坛Android应用
+Mario Forever 社区 Android 应用
 
-# 主页
+本 App 基于 [Discuz Hub](https://github.com/kidozh/DiscuzHub)，在此对开发者表示感谢
 
-我们推荐你访问[应用主页](https://discuzhub.kidozh.com/en/)，以获得详尽的政策、更新以及安全信息。
+社区 App 随上游同步更新，因此版本号和 Discuz Hub 是相同的（但包名不同）。
 
-[English](./README.md)
+[发布地址](https://www.marioforever.net/thread-223-1-1.html)
+
+[Dizcuz Hub 主页](https://discuzhub.kidozh.com/)
 
 # 功能与支持
 
 + 应用层面
     - 支持密码以及网页验证
-    - 多论坛支持
+	- 支持 QQ 登录
     - 多账号支持
     - 深色模式支持
     - 通知预览
@@ -28,7 +30,7 @@
     - 快速回复
     - 给某位楼主回复
     - 富文本渲染支持
-    - 内嵌的图像渲染支持（GIF不支持播放）
+    - 内嵌的图像渲染支持（GIF 不支持播放）
     - 省流量模式
     - 查看图片并下载附件
 + 发帖
@@ -46,18 +48,16 @@
     - 公共及私信查看及回复
 + 用户
     - 基本信息
-    - 渲染HTML格式的个人信息
+    - 渲染 HTML 格式的个人信息
     - 查看好友以及他发表过的主题和帖子
-    - 支持播放GIF动画头像
-    - 内嵌webview
+    - 支持播放 GIF 动画头像
+    - 内嵌 webview
     - 灵活的完成验证以及其他交互
-    - 完整支持论坛网页渲染（可能会有XSS风险）
+    - 完整支持论坛网页渲染（可能会有 XSS 风险）
     
 # 截图
 
-以下论坛与我们并无直接或间接关系，并且对功能不提供任何形式的担保
-
-## 选择论坛和登陆账号
+## 登陆账号
 
 ![Homepage](./screenshot/home.jpg)
 
@@ -83,4 +83,4 @@
 
 # 开源协议
 
-MIT协议
+MIT 协议
