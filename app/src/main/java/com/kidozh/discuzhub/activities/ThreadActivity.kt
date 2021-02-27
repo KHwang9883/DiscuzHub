@@ -60,12 +60,14 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.text.TextUtils
 import androidx.core.content.ContextCompat
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.RequiresApi
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
@@ -104,7 +106,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
     private var handler: EmotionInputHandler? = null
     lateinit var threadDetailViewModel: ThreadViewModel
     lateinit var smileyViewModel: SmileyViewModel
-    private var concatAdapter: ConcatAdapter? = null
+    private lateinit var concatAdapter: ConcatAdapter
     val networkIndicatorAdapter = NetworkIndicatorAdapter()
     lateinit var smileyViewPagerAdapter: SmileyViewPagerAdapter
 
@@ -192,6 +194,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun bindViewModel() {
         // for personal info
         threadDetailViewModel.bbsPersonInfoMutableLiveData.observe(this, { userBriefInfo ->
@@ -212,10 +215,10 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
             Log.d(TAG, "queried page " + viewThreadQueryStatus!!.page)
             if (viewThreadQueryStatus.page == 1) {
                 postAdapter.clearList()
-                postAdapter.addThreadInfoList(posts, threadDetailViewModel.threadStatusMutableLiveData.value, authorid)
+                threadDetailViewModel.threadStatusMutableLiveData.value?.let { postAdapter.addThreadInfoList(posts as MutableList<Post>, it, authorid) }
                 binding.postsRecyclerview.scrollToPosition(0)
             } else {
-                postAdapter.addThreadInfoList(posts, threadDetailViewModel.threadStatusMutableLiveData.value, authorid)
+                threadDetailViewModel.threadStatusMutableLiveData.value?.let { postAdapter.addThreadInfoList(posts as MutableList<Post>, it, authorid) }
             }
         })
         threadDetailViewModel.networkStatus.observe(this, { integer: Int ->
@@ -453,12 +456,16 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
         threadDetailViewModel.threadPostResultMutableLiveData.observe(this, { threadResult ->
             if (threadResult != null) {
                 if (threadResult.threadPostVariables != null && threadResult.threadPostVariables.detailedThreadInfo != null && threadResult.threadPostVariables.detailedThreadInfo.subject != null) {
-                    val sp = Html.fromHtml(threadResult.threadPostVariables.detailedThreadInfo.subject)
+                    val sp = Html.fromHtml(threadResult.threadPostVariables.detailedThreadInfo.subject,HtmlCompat.FROM_HTML_MODE_COMPACT)
                     val spannableString = SpannableString(sp)
                     binding.bbsThreadSubject.setText(spannableString, TextView.BufferType.SPANNABLE)
                     if (supportActionBar != null) {
                         supportActionBar!!.setTitle(threadResult.threadPostVariables.detailedThreadInfo.subject)
                     }
+                    // check with comments
+                    Log.d(TAG,"get comments "+threadResult.threadPostVariables.commentList.keys.size+" "+threadResult.threadPostVariables.commentList)
+                    postAdapter.mergeCommentMap(threadResult.threadPostVariables.commentList)
+
                     val detailedThreadInfo = threadResult.threadPostVariables.detailedThreadInfo
                     if (detailedThreadInfo != null && hasLoadOnce == false) {
                         hasLoadOnce = true
@@ -744,7 +751,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
     }
 
     override fun replyToSomeOne(position: Int) {
-        val threadCommentInfo = postAdapter!!.threadInfoList[position]
+        val threadCommentInfo = postAdapter.threadInfoList.get(position)
         selectedThreadComment = threadCommentInfo
         binding.bbsThreadDetailReplyChip.text = threadCommentInfo.author
         binding.bbsThreadDetailReplyChip.visibility = View.VISIBLE
@@ -1136,11 +1143,12 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
         val linearLayoutManager = LinearLayoutManager(this)
         binding.postsRecyclerview.layoutManager = linearLayoutManager
         binding.postsRecyclerview.itemAnimator = getRecyclerviewAnimation(this)
-        postAdapter = PostAdapter(this,
-                discuz,
-                user,
-                threadDetailViewModel.threadStatusMutableLiveData.value)
-        postAdapter!!.subject = subject
+        postAdapter = threadDetailViewModel.threadStatusMutableLiveData.value?.let {
+            PostAdapter(
+                    discuz,
+                    user,
+                    it)
+        }!!
         concatAdapter = ConcatAdapter(postAdapter, networkIndicatorAdapter)
         binding.postsRecyclerview.adapter = getAnimatedAdapter(this, concatAdapter!!)
         binding.postsRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
