@@ -86,11 +86,18 @@ class PostAdapter(private val bbsInfo: Discuz, private val curUser: User?, viewT
     private var onAdvanceOptionClickedListener: OnAdvanceOptionClicked? = null
     private var authorId = 0
     private lateinit var context : Context
+
+    init {
+        setHasStableIds(false)
+    }
+
     fun clearList() {
         val oldSize = postList.size
         postList.clear()
         notifyItemRangeRemoved(0, oldSize)
     }
+
+
 
     fun addThreadInfoList(postList: MutableList<Post>, viewThreadQueryStatus: ViewThreadQueryStatus, authorId: Int) {
         val oldSize = this.postList.size
@@ -118,6 +125,7 @@ class PostAdapter(private val bbsInfo: Discuz, private val curUser: User?, viewT
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         context = parent.context
+
         client = NetworkUtils.getPreferredClient(context)
         val layoutIdForListItem = R.layout.item_post
         val inflater = LayoutInflater.from(context)
@@ -693,57 +701,59 @@ class PostAdapter(private val bbsInfo: Discuz, private val curUser: User?, viewT
                     val glideUrl = GlideUrl(url,
                             LazyHeaders.Builder().addHeader("referer", bbsInfo.base_url).build()
                     )
-                    drawableTargetList?.forEach { drawableTarget ->
-                        Glide.with(context)
-                                .load(glideUrl)
-                                .error(R.drawable.vector_drawable_image_failed)
-                                .placeholder(R.drawable.vector_drawable_loading_image)
-                                .onlyRetrieveFromCache(true)
-                                .listener(object : RequestListener<Drawable?> {
-                                    override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable?>, isFirstResource: Boolean): Boolean {
-                                        isLoading = false
-                                        val handler = Handler(Looper.getMainLooper())
-                                        // update all drawable target
-                                        for (drawTarget in drawableTargetList) {
-                                            handler.post {
-                                                val glideUrl = GlideUrl(url,
-                                                        LazyHeaders.Builder().addHeader("referer", bbsInfo.base_url).build()
-                                                )
-                                                Glide.with(context)
-                                                        .load(glideUrl)
-                                                        .error(R.drawable.vector_drawable_image_failed)
-                                                        .placeholder(R.drawable.vector_drawable_loading_image)
-                                                        .listener(object : RequestListener<Drawable> {
-                                                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                                                                textView.invalidate()
-                                                                return false
-                                                            }
+                    val firstDrawableTarget = drawableTargetList!![0]
+                    Glide.with(context)
+                            .load(glideUrl)
+                            .error(R.drawable.vector_drawable_image_failed)
+                            .placeholder(R.drawable.vector_drawable_loading_image)
+                            .onlyRetrieveFromCache(true)
+                            .listener(object : RequestListener<Drawable?> {
+                                override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable?>, isFirstResource: Boolean): Boolean {
+                                    isLoading = false
+                                    val handler = Handler(Looper.getMainLooper())
+                                    // update all drawable target
+                                    for (drawTarget in drawableTargetList) {
+                                        handler.post {
+                                            val glideUrl = GlideUrl(url,
+                                                    LazyHeaders.Builder().addHeader("referer", bbsInfo.base_url).build()
+                                            )
+                                            Glide.with(context)
+                                                    .load(glideUrl)
+                                                    .error(R.drawable.vector_drawable_image_failed)
+                                                    .placeholder(R.drawable.vector_drawable_loading_image)
+                                                    .listener(object : RequestListener<Drawable> {
+                                                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                                            textView.invalidate()
+                                                            return false
+                                                        }
 
-                                                            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                                                textView.invalidate()
-                                                                return false
-                                                            }
+                                                        override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                                            textView.invalidate()
+                                                            return false
+                                                        }
 
-                                                        })
-                                                        .into(drawTarget)
-                                            }
-
+                                                    })
+                                                    .into(drawTarget)
                                         }
 
-                                        return false
                                     }
 
-                                    override fun onResourceReady(resource: Drawable?, model: Any, target: Target<Drawable?>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-                                        isLoading = false
-                                        val intent = Intent(context, FullImageActivity::class.java)
-                                        intent.putExtra("URL", url)
-                                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                        context.startActivity(intent)
-                                        return false
-                                    }
-                                })
-                                .into(drawableTarget)
-                    }
+                                    return false
+                                }
+
+                                override fun onResourceReady(resource: Drawable?, model: Any, target: Target<Drawable?>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+                                    isLoading = false
+                                    val intent = Intent(context, FullImageActivity::class.java)
+                                    intent.putExtra("URL", url)
+                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                    context.startActivity(intent)
+                                    return false
+                                }
+                            })
+                            .into(firstDrawableTarget)
+//                    drawableTargetList?.forEach { drawableTarget ->
+//
+//                    }
 
                 }
 //                else {
