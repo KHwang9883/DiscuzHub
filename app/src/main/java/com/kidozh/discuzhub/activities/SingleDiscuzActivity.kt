@@ -136,6 +136,14 @@ class SingleDiscuzActivity : BaseStatusActivity() {
                     startActivity(intent)
                     true
                 }
+                R.id.short_cut ->{
+
+                    val intent = Intent(this, ShortcutActivity::class.java)
+                    intent.putExtra(ConstUtils.PASS_BBS_ENTITY_KEY, bbs)
+                    intent.putExtra(ConstUtils.PASS_BBS_USER_KEY, user)
+                    startActivity(intent)
+                    true
+                }
 
                 R.id.draft_box -> {
                     val userBriefInfo = viewModel.currentUserMutableLiveData.value
@@ -211,7 +219,7 @@ class SingleDiscuzActivity : BaseStatusActivity() {
                         .apply(RequestOptions.placeholderOf(avatarResource).error(avatarResource))
                         .into(navHeaderBinding.userAvatar)
                 navHeaderBinding.headerTitle.setText(user.username)
-                navHeaderBinding.headerSubtitle.setText(getString(R.string.user_id_description,user.getUid().toString()))
+                navHeaderBinding.headerSubtitle.setText(getString(R.string.user_id_description,user.getUid()))
             }
         })
         viewModel.userListLiveData.observe(this, Observer { userList ->
@@ -328,7 +336,7 @@ class SingleDiscuzActivity : BaseStatusActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }

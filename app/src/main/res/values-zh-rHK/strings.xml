@@ -452,7 +452,7 @@
     <string name="bbs">論壇</string>
     <string name="management">管理</string>
     <string name="user_anonymous_description">在不登陸賬號下訪問論壇。 </string>
-    <string name="user_id_description">用戶編號: %1$s</string>
+    <string name="user_id_description">用戶編號: %1$d</string>
     <string name="add_a_bbs">添加論壇</string>
     <string name="manage_bbs">管理論壇</string>
     <string name="manage_bbs_description">對現有的論壇進行排序或者刪除操作。 </string>
@@ -761,5 +761,12 @@
     <string name="jump_pos_over">請鍵入一個比%1$d要小的樓層。 </string>
     <string name="invalid_position">此輸入樓層為錯誤值。 </string>
     <string name="view_thread_title">查看帖子</string>
+    <string name="fid_input_edit_text_hint">輸入FID（論壇編號）</string>
+    <string name="tid_input_edit_text_hint">輸入TID（帖子編號）</string>
+    <string name="uid_input_edit_text_hint">輸入UID（用戶編號）</string>
+    <string name="short_cut_activity_title">快速跳轉</string>
+    <string name="short_cut_submit">跳轉</string>
+    <string name="short_cut_description">快速鎖定論壇資源</string>
+    <string name="forum_information_title">論壇詳情</string>
 
 </resources>

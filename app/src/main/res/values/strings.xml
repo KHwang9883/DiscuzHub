@@ -195,7 +195,7 @@
     <string name="bbs_no_item_found">No item is found.</string>
     <string name="bbs_send_pm">Send</string>
     <string name="bbs_pm_is_required">Please at least say something.</string>
-    
+
     <string name="bbs_follow_user">Follow</string>
     <string name="bbs_bio_not_set">Bio is not set</string>
     <string name="bbs_user_friend">Friends</string>
@@ -889,6 +889,13 @@
     <string name="jump_pos_over">You just input a over-sized number(max:%1$d).</string>
     <string name="invalid_position">Invalid value is given.</string>
     <string name="view_thread_title">View a thread</string>
+    <string name="fid_input_edit_text_hint">Input forum\'s ID</string>
+    <string name="tid_input_edit_text_hint">Input thread\'s ID</string>
+    <string name="uid_input_edit_text_hint">Input user\'s ID</string>
+    <string name="short_cut_activity_title">Shortcut</string>
+    <string name="short_cut_submit">Go</string>
+    <string name="short_cut_description">Quickly locate bbs resources</string>
+    <string name="forum_information_title">Forum info.</string>
 
 
 </resources>
