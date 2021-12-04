@@ -15,6 +15,8 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.ihsanbal.logging.Level;
+import com.ihsanbal.logging.LoggingInterceptor;
 import com.kidozh.discuzhub.R;
 import com.kidozh.discuzhub.entities.ErrorMessage;
 import com.kidozh.discuzhub.entities.User;
@@ -52,6 +54,7 @@ public class NetworkUtils {
 
     public static OkHttpClient getSafeOkHttpClient(Context context){
         OkHttpClient.Builder mBuilder = new OkHttpClient.Builder();
+        mBuilder.addInterceptor(new LoggingInterceptor.Builder().build());
         mBuilder.readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIMEOUT,TimeUnit.SECONDS)
                 .connectTimeout(CONNECT_TIMEOUT,TimeUnit.SECONDS);
@@ -65,8 +68,10 @@ public class NetworkUtils {
         cookieJar.clearSession();
         cookieJar.clear();
         OkHttpClient.Builder mBuilder = new OkHttpClient.Builder().cookieJar(cookieJar);
+        mBuilder.addInterceptor(new LoggingInterceptor.Builder().build());
         mBuilder.readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIMEOUT,TimeUnit.SECONDS)
+
                 .connectTimeout(CONNECT_TIMEOUT,TimeUnit.SECONDS);
 
 
@@ -193,7 +198,7 @@ public class NetworkUtils {
                 );
         OkHttpClient.Builder mBuilder = new OkHttpClient.Builder().cookieJar(cookieJar);
         mBuilder
-
+                .addInterceptor(new LoggingInterceptor.Builder().build())
                 .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIMEOUT,TimeUnit.SECONDS)
                 .connectTimeout(CONNECT_TIMEOUT,TimeUnit.SECONDS);

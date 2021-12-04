@@ -81,10 +81,10 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
 
     lateinit var postAdapter: PostAdapter
     lateinit var countAdapter: ThreadCountAdapter
-    var formHash: String? = null
+    var formHash: String = ""
     var forum: Forum? = null
     lateinit var discuz: Discuz
-    var thread: Thread? = null
+    lateinit var thread: Thread
     private var hasLoadOnce = false
     private var notifyLoadAll = false
     var poll: Poll? = null
@@ -123,7 +123,8 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
         forum = intent.getParcelableExtra(ConstUtils.PASS_FORUM_THREAD_KEY)
         discuz = intent.getSerializableExtra(ConstUtils.PASS_BBS_ENTITY_KEY) as Discuz
         user = intent.getSerializableExtra(ConstUtils.PASS_BBS_USER_KEY) as User?
-        thread = intent.getSerializableExtra(ConstUtils.PASS_THREAD_KEY) as Thread?
+        thread = intent.getSerializableExtra(ConstUtils.PASS_THREAD_KEY) as Thread
+
         tid = intent.getIntExtra("TID", 0)
         fid = intent.getIntExtra("FID", 0)
         subject = intent.getStringExtra("SUBJECT")
@@ -131,11 +132,9 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
         URLUtils.setBBS(discuz)
         threadDetailViewModel.setBBSInfo(discuz, user, forum, tid)
         smileyViewModel.configureDiscuz(discuz, user)
-        if (thread != null) {
-            val sp = Html.fromHtml(thread!!.subject, HtmlCompat.FROM_HTML_MODE_LEGACY)
-            val spannableString = SpannableString(sp)
-            binding.bbsThreadSubject.setText(spannableString, TextView.BufferType.SPANNABLE)
-        }
+        val sp = Html.fromHtml(thread!!.subject, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        val spannableString = SpannableString(sp)
+        binding.bbsThreadSubject.setText(spannableString, TextView.BufferType.SPANNABLE)
         smileyViewPagerAdapter = SmileyViewPagerAdapter(supportFragmentManager,
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,discuz,this)
     }
@@ -515,7 +514,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
 
                         @Throws(IOException::class)
                         override fun onResponse(call: Call, response: Response) {
-                            if (response.isSuccessful && response.body() != null) {
+                            if (response.isSuccessful && response.body != null) {
                                 // get the session
                                 binding.bbsPostCaptchaImageview.post {
                                     val factory = OkHttpUrlLoader.Factory(client)
@@ -1272,8 +1271,8 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful && response.body() != null) {
-                    val s = response.body()!!.string()
+                if (response.isSuccessful && response.body != null) {
+                    val s = response.body!!.string()
                     Log.d(TAG, "Recv comment info $s")
                     val returnedMessage = bbsParseUtils.parseReturnMessage(s)
                     if (returnedMessage != null && returnedMessage.value == "post_reply_succeed") {
@@ -1409,8 +1408,8 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                if (response.body() != null) {
-                    val s = response.body()!!.string()
+                if (response.body != null) {
+                    val s = response.body!!.string()
                     val returnedMessage = bbsParseUtils.parseReturnMessage(s)
                     Log.d(TAG, "Recv reply comment info $s")
                     if (returnedMessage != null && returnedMessage.value == "post_reply_succeed") {
@@ -1557,7 +1556,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
                 val result = threadDetailViewModel.threadPostResultMutableLiveData.value
                 if (result != null) {
                     val detailedThreadInfo = result.threadPostVariables.detailedThreadInfo
-                    val favoriteThread = detailedThreadInfo.toFavoriteThread(discuz.id, if (user != null) user!!.getUid() else 0)
+                    val favoriteThread = detailedThreadInfo.toFavoriteThread(discuz.id, if (user != null) user!!.uid else 0)
                     // save it to the database
                     // boolean isFavorite = threadDetailViewModel.isFavoriteThreadMutableLiveData.getValue();
                     val favoriteThreadInDB = threadDetailViewModel.favoriteThreadLiveData.value

@@ -5,14 +5,14 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.kidozh.discuzhub.R
-import com.kidozh.discuzhub.entities.ErrorMessage
 import com.kidozh.discuzhub.entities.Discuz
+import com.kidozh.discuzhub.entities.ErrorMessage
 import com.kidozh.discuzhub.entities.User
 import com.kidozh.discuzhub.results.LoginResult
 import com.kidozh.discuzhub.results.SecureInfoResult
 import com.kidozh.discuzhub.services.DiscuzApiService
 import com.kidozh.discuzhub.utilities.NetworkUtils
-import okhttp3.*
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,7 +30,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var service: DiscuzApiService
 
 
-    public fun setInfo(bbsInfo: Discuz, user: User?, client: OkHttpClient){
+    fun setInfo(bbsInfo: Discuz, user: User?, client: OkHttpClient){
         this.bbsInfo = bbsInfo
         this.user = user
         this.client = client
@@ -42,8 +42,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     fun loadSecureInfo(){
         val call = service.secureResult("login")
-        call.enqueue(object : retrofit2.Callback<SecureInfoResult> {
-            override fun onResponse(call: retrofit2.Call<SecureInfoResult>, response: retrofit2.Response<SecureInfoResult>) {
+        call.enqueue(object : Callback<SecureInfoResult> {
+            override fun onResponse(call: Call<SecureInfoResult>, response: Response<SecureInfoResult>) {
                 if (response.isSuccessful) {
                     val result = response.body()
                     secureInfoResultMutableLiveData.postValue(result)
@@ -53,7 +53,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
 
-            override fun onFailure(call: retrofit2.Call<SecureInfoResult>, t: Throwable) {
+            override fun onFailure(call: Call<SecureInfoResult>, t: Throwable) {
                 errorMessage.postValue(ErrorMessage(
                         getApplication<Application>().getString(R.string.discuz_network_failure_template),
                         if (t.localizedMessage == null) t.toString() else t.localizedMessage
@@ -70,24 +70,26 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         retrofit  = NetworkUtils.getRetrofitInstance(bbsInfo.base_url, client)
         service = retrofit.create(DiscuzApiService::class.java)
         val options:HashMap<String,String> = hashMapOf(
-                "loginfield" to "username","username" to account,
-                "password" to password, "loginsubmit" to "yes",
+                "loginfield" to "username",
+                "username" to account,
+                "password" to password,
+                "loginsubmit" to "yes",
                 "cookietime" to "2592000"
 
         )
         if(securityQuestionId !=0){
-            options.put("questionid",securityQuestionId.toString())
-            options.put("answer",securityAnswer)
+            options["questionid"] = securityQuestionId.toString()
+            options["answer"] = securityAnswer
         }
 
         if(securityHash != null){
-            options.put("seccodehash",securityHash)
-            options.put("seccodemodid", "member::logging")
-            options.put("seccodeverify",captcha)
+            options["seccodehash"] = securityHash
+            options["seccodemodid"] = "member::logging"
+            options["seccodeverify"] = captcha
         }
 
         val loginCall = service.loginCall(options)
-        Log.d(TAG,"login call "+loginCall.request().url()+" "+loginCall.request().body().toString())
+        Log.d(TAG,"login call ${loginCall.request()}")
         loginCall.enqueue(object :Callback<LoginResult>{
             override fun onResponse(call: Call<LoginResult>, response: Response<LoginResult>) {
                 Log.d(TAG,"GET JSON "+response.body().toString())

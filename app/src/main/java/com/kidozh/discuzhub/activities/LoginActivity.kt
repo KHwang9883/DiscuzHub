@@ -34,6 +34,7 @@ import com.kidozh.discuzhub.utilities.VibrateUtils
 import com.kidozh.discuzhub.viewModels.LoginViewModel
 import es.dmoral.toasty.Toasty
 import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.io.IOException
 import java.io.InputStream
 
@@ -63,6 +64,7 @@ class LoginActivity : BaseStatusActivity() {
             binding.loginBbsUrl.text = getString(R.string.user_relogin, user!!.username)
             binding.loginBbsAccountTextInputEditText.setText(user!!.username)
         }
+
         val factory = OkHttpUrlLoader.Factory(client)
         Glide.get(this).registry.replace(GlideUrl::class.java, InputStream::class.java, factory)
         Glide.with(this)
@@ -75,7 +77,7 @@ class LoginActivity : BaseStatusActivity() {
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
-                    view: View,
+                    view: View?,
                     position: Int,
                     id: Long
                 ) {
@@ -169,7 +171,7 @@ class LoginActivity : BaseStatusActivity() {
                             override fun onFailure(call: Call, e: IOException) {}
                             @Throws(IOException::class)
                             override fun onResponse(call: Call, response: Response) {
-                                if (response.isSuccessful && response.body() != null) {
+                                if (response.isSuccessful && response.body != null) {
                                     // get the session
                                     binding.loginBbsCaptchaImageView.post {
                                         val factory = OkHttpUrlLoader.Factory(
@@ -224,7 +226,7 @@ class LoginActivity : BaseStatusActivity() {
                     } else {
                         // refresh the captcha
                         viewModel!!.loadSecureInfo()
-                        if (key == "login_seccheck2") {
+                        if (key == "login_seccheck2" || key == "login_seccheck") {
                             // need captcha
                             viewModel!!.loadSecureInfo()
                         }
@@ -305,35 +307,51 @@ class LoginActivity : BaseStatusActivity() {
     }
 
     private fun saveUserToDatabase(userBriefInfo: User, client: OkHttpClient, httpURL: String){
-        val httpUrl: HttpUrl? = HttpUrl.parse(httpURL)
-
+        val httpUrl: HttpUrl = httpURL.toHttpUrlOrNull() ?: return
         var insertedId: Long = 0
         Thread{
-            insertedId = UserDatabase.getInstance(applicationContext)
-                .getforumUserBriefInfoDao().insert(userBriefInfo)
-        }.start()
-        userBriefInfo.id = insertedId.toInt()
-        val savedClient = NetworkUtils.getPreferredClientWithCookieJarByUser(
-            applicationContext, userBriefInfo
-        )
-        val cookies = client.cookieJar().loadForRequest(httpUrl)
-        Log.d(TAG, "Http url " + httpUrl.toString() + " cookie list size " + cookies.size)
-        savedClient.cookieJar().saveFromResponse(httpUrl, cookies)
-        // manually set the cookie to shared preference
-        val sharedPrefsCookiePersistor = SharedPrefsCookiePersistor(
-            getSharedPreferences(
-                NetworkUtils.getSharedPreferenceNameByUser(
-                    userBriefInfo
-                ), MODE_PRIVATE
+            // may clear all the users first
+            val firstMightExistUser = UserDatabase.getInstance(this).getforumUserBriefInfoDao().getFirstUserByDiscuzIdAndUid(bbsInfo!!.id,userBriefInfo.uid)
+            Log.d(TAG,"GET all users(${userBriefInfo.uid}) from database $firstMightExistUser")
+            if (firstMightExistUser != null){
+                // if not null then replace the first one
+                userBriefInfo.id = firstMightExistUser.id
+                // then delete all the existing users
+                UserDatabase.getInstance(this).getforumUserBriefInfoDao().deleteAllUserByDiscuzIdAndUid(bbsInfo!!.id,userBriefInfo.uid)
+            }
+            // then insert this to database
+            insertedId = UserDatabase.getInstance(applicationContext).getforumUserBriefInfoDao().insert(userBriefInfo)
+            userBriefInfo.id = insertedId.toInt()
+            val savedClient = NetworkUtils.getPreferredClientWithCookieJarByUser(
+                applicationContext, userBriefInfo
             )
-        )
-        sharedPrefsCookiePersistor.saveAll(savedClient.cookieJar().loadForRequest(httpUrl))
-        Log.d(
-            TAG,
-            "Http url " + httpUrl.toString() + " saved cookie list size " + savedClient.cookieJar()
-                .loadForRequest(httpUrl).size
-        )
-        finishAfterTransition()
+            val cookies = client.cookieJar.loadForRequest(httpUrl)
+            for (i in cookies){
+                Log.d(TAG,"Get user ${userBriefInfo.id} cookie: $i")
+            }
+            Log.d(TAG, "Http url " + httpUrl.toString() + " cookie list size " + cookies.size)
+            savedClient.cookieJar.saveFromResponse(httpUrl, cookies)
+            // manually set the cookie to shared preference
+            val sharedPrefsCookiePersistor = SharedPrefsCookiePersistor(
+                getSharedPreferences(
+                    NetworkUtils.getSharedPreferenceNameByUser(
+                        userBriefInfo
+                    ), MODE_PRIVATE
+                )
+            )
+
+            sharedPrefsCookiePersistor.saveAll(savedClient.cookieJar.loadForRequest(httpUrl))
+            Log.d(
+                TAG,
+                "Http url $httpUrl saved cookie list size " + savedClient.cookieJar
+                    .loadForRequest(httpUrl).size
+            )
+            runOnUiThread {
+                finishAfterTransition()
+            }
+
+        }.start()
+
     }
 
     fun configureActionBar() {
@@ -351,9 +369,9 @@ class LoginActivity : BaseStatusActivity() {
 
     private fun configureData() {
         val intent = intent
-        bbsInfo = intent.getSerializableExtra(ConstUtils.PASS_BBS_ENTITY_KEY) as Discuz?
+        bbsInfo = intent.getSerializableExtra(ConstUtils.PASS_BBS_ENTITY_KEY) as Discuz
         user = intent.getSerializableExtra(ConstUtils.PASS_BBS_USER_KEY) as User?
-        client = NetworkUtils.getPreferredClientWithCookieJar(applicationContext)
+        client = NetworkUtils.getPreferredClientWithCookieJar(this)
         viewModel!!.setInfo(bbsInfo!!, user, client)
         if (bbsInfo == null) {
             finishAfterTransition()

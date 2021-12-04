@@ -7,11 +7,16 @@ import com.kidozh.discuzhub.entities.User
 import com.kidozh.discuzhub.utilities.OneZeroBooleanJsonDeserializer
 
 open class VariableResults : BaseResult() {
-    var cookiepre: String? = null
-    var auth: String? = null
-    var saltkey: String? = null
-    var member_username: String? = null
-    var member_avatar: String? = null
+    @JsonProperty(defaultValue = "", required = false)
+    var cookiepre: String = ""
+    @JsonProperty(defaultValue = "", required = false)
+    var auth: String? = ""
+    @JsonProperty(defaultValue = "", required = false)
+    var saltkey: String = ""
+    @JsonProperty(defaultValue = "", required = false)
+    var member_username: String = ""
+    @JsonProperty(defaultValue = "", required = false)
+    var member_avatar: String = ""
     var member_uid = 0
 
     @JsonProperty("groupid")
@@ -22,9 +27,9 @@ open class VariableResults : BaseResult() {
     @JsonProperty("formhash")
     lateinit var formHash: String
 
-//    @JsonProperty("ismoderator")
-//    @JsonDeserialize(using = OneZeroBooleanJsonDeserializer::class)
-//    var moderator: Boolean = false
+    @JsonProperty("ismoderator", defaultValue = "0", required = false)
+    @JsonDeserialize(using = OneZeroBooleanJsonDeserializer::class)
+    var moderator: Boolean = false
 
     @JsonProperty("readaccess")
     var readAccess = 0
