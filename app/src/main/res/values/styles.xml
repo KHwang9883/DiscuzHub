@@ -1,36 +1,41 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme" parent="MaterialTheme">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <!--        <item name="colorPrimary">@color/my_app_primary</item>-->
+        <!--        <item name="colorPrimaryDark">@color/my_app_primary_dark</item>-->
+        <!--        <item name="colorSecondary">@color/colorEmerland</item>-->
+        <!--        <item name="android:colorBackground">?attr/colorOnBackground</item>-->
+        <!--        <item name="colorError">@color/colorAlizarin</item>-->
 
         <!-- set status bar-->
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">false</item>
+        <!--        <item name="android:windowLightStatusBar">true</item>-->
+        <!--        <item name="android:windowTranslucentStatus">false</item>-->
+        <!--        <item name="android:windowTranslucentNavigation">false</item>-->
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
-        <item name="android:statusBarColor">@color/colorBackgroundDefault</item>
-
+        <!--        <item name="android:statusBarColor">@color/colorBackgroundDefault</item>-->
+        <item name="android:statusBarColor">?attr/colorPrimaryContainer</item>
+        <item name="android:enforceStatusBarContrast" tools:targetApi="q">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">?attr/colorSecondaryContainer</item>
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="q">true</item>
         <!-- navigation bar -->
-        <item name="android:navigationBarColor">@color/colorBackgroundDefault</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
-        <item name="android:actionMenuTextColor">@color/colorTextDefault</item>
+        <!--        <item name="android:actionMenuTextColor">@color/colorTextDefault</item>-->
 
 
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
         <item name="actionBarTabTextStyle">@style/ActionBarTabText</item>
-        <item name="actionMenuTextColor">@color/colorTextDefault</item>
+        <!--        <item name="actionMenuTextColor">@color/colorTextDefault</item>-->
 
-        <item name="cardViewStyle">@style/CardView.DayNight</item>
+        <!--        <item name="cardViewStyle">@style/CardView.DayNight</item>-->
 
         <!-- enable window content transitions -->
         <item name="android:windowActivityTransitions">true</item>
@@ -53,58 +58,34 @@
         <item name="android:textColor">@color/colorTextDefault</item>
     </style>
 
-    <style name="LightActionBar" parent="Theme.MaterialComponents.Light">
-        <item name="android:background">@color/colorBackgroundDefault</item>
-        <item name="background">@color/colorBackgroundDefault</item>
-        <item name="android:backgroundStacked">@color/colorBackgroundDefault</item>
-        <item name="android:titleTextStyle">@style/ActionBarTitle</item>
-        <item name="android:titleTextColor">@color/colorTextDefault</item>
-        <item name="android:statusBarColor">@color/colorBackgroundDefault</item>
 
-        <item name="titleTextStyle">@style/ActionBarTitle</item>
-        <item name="titleTextColor">@color/colorTextDefault</item>
-
-        <item name="android:displayOptions">showHome|useLogo|showTitle</item>
-        <item name="displayOptions">showHome|useLogo|showTitle</item>
-
-    </style>
-
-    <style name="LightActionBarTitle" parent="Theme.MaterialComponents.DayNight">
-        <item name="android:textColor">@color/colorTextDefault</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:titleTextColor">@color/colorTextDefault</item>
-        <item name="android:textSize">20sp</item>
-
-    </style>
-
-    <style name="DarkActionBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="background">@color/colorPrimary</item>
-        <item name="android:backgroundStacked">@color/colorPrimary</item>
-        <item name="android:titleTextStyle">@style/DarkActionBarTitle</item>
-        <item name="android:statusBarColor">@color/colorPrimary</item>
+    <style name="Material3ActionBar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?attr/colorPrimaryContainer</item>
+        <item name="background">?attr/colorPrimaryContainer</item>
+        <item name="android:backgroundStacked">?attr/colorPrimaryContainer</item>
+        <item name="android:titleTextStyle">@style/Material3ActionBarTitle</item>
+        <item name="titleTextColor">?attr/colorOnPrimaryContainer</item>
+        <!--        <item name="android:statusBarColor">@color/colorPrimary</item>-->
 
 
-        <item name="titleTextStyle">@style/DarkActionBarTitle</item>
+        <item name="titleTextStyle">@style/Material3ActionBarTitle</item>
 
         <item name="android:displayOptions">showHome|useLogo|showTitle</item>
         <item name="displayOptions">showHome|useLogo|showTitle</item>
 
     </style>
 
-    <style name="DarkActionBarTitle" parent="Theme.MaterialComponents.Light">
-        <item name="android:textColor">@color/colorPureWhite</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:titleTextColor">@color/colorPureWhite</item>
-        <item name="android:textSize">20sp</item>
+    <style name="Material3ActionBarTitle" parent="Theme.Material3.Light">
+        <item name="android:textColor">?attr/colorOnPrimaryContainer</item>
+        <!--        <item name="android:textAlignment">center</item>-->
+        <!--        <item name="android:titleTextColor">@color/colorPureWhite</item>-->
+        <!--        <item name="android:textSize">20sp</item>-->
 
     </style>
 
     <style name="ActionBarTabText" parent="@style/Widget.AppCompat.ActionBar.TabText">
         <item name="android:textColor">@color/colorTextDefault</item>
     </style>
-
-
 
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
@@ -141,29 +122,82 @@
     </style>
 
     <style name="AppTheme.Default">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/md_theme_blue_red_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_blue_red_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_blue_red_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_blue_red_light_onPrimaryContainer
+        </item>
+        <item name="colorSecondary">@color/md_theme_blue_red_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_blue_red_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_blue_red_light_secondaryContainer
+        </item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_blue_red_light_onSecondaryContainer
+        </item>
+        <item name="colorTertiary">@color/md_theme_blue_red_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_blue_red_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_blue_red_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_blue_red_light_onTertiaryContainer
+        </item>
+        <item name="colorError">@color/md_theme_blue_red_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_blue_red_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_blue_red_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_blue_red_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_blue_red_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_blue_red_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_blue_red_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_blue_red_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_blue_red_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_blue_red_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_blue_red_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_blue_red_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_blue_red_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_blue_red_light_primaryInverse</item>
+
+        <!--        <item name="colorPrimary">?attr/colorPrimary</item>-->
+        <!--        <item name="colorPrimaryDark">?attr/colorPrimaryDark</item>-->
+        <!--        <item name="colorAccent">?attr/colorAccent</item>-->
 
         <!-- status bar configuration -->
 
 
-
-        <item name="android:actionBarStyle">@style/LightActionBar</item>
-        <item name="android:toolbarStyle">@style/LightActionBar</item>
-        <item name="actionBarStyle">@style/LightActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
 
 
     </style>
 
     <style name="AppTheme.Red">
-        <item name="colorPrimary">@color/MaterialColorPink</item>
-        <item name="colorPrimaryDark">@color/MaterialColorRed</item>
-        <item name="colorAccent">@color/MaterialColorCyan</item>
+        <item name="colorPrimary">@color/md_theme_red_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_red_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_red_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_red_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_red_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_red_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_red_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_red_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_red_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_red_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_red_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_red_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_red_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_red_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_red_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_red_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_red_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_red_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_red_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_red_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_red_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_red_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_red_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_red_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_red_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_red_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -171,13 +205,36 @@
     </style>
 
     <style name="AppTheme.Purple">
-        <item name="colorPrimary">@color/MaterialColorPurple</item>
-        <item name="colorPrimaryDark">@color/MaterialColorDeepPurple</item>
-        <item name="colorAccent">@color/MaterialColorGreen</item>
+        <item name="colorPrimary">@color/md_theme_purple_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_purple_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_purple_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_purple_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_purple_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_purple_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_purple_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_purple_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_purple_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_purple_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_purple_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_purple_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_purple_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_purple_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_purple_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_purple_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_purple_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_purple_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_purple_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_purple_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_purple_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_purple_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_purple_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_purple_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_purple_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_purple_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -185,13 +242,36 @@
     </style>
 
     <style name="AppTheme.Indigo">
-        <item name="colorPrimary">@color/MaterialColorLightBlue</item>
-        <item name="colorPrimaryDark">@color/MaterialColorBlue</item>
-        <item name="colorAccent">@color/MaterialColorOrange</item>
+        <item name="colorPrimary">@color/md_theme_indigo_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_indigo_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_indigo_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_indigo_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_indigo_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_indigo_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_indigo_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_indigo_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_indigo_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_indigo_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_indigo_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_indigo_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_indigo_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_indigo_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_indigo_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_indigo_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_indigo_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_indigo_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_indigo_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_indigo_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_indigo_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_indigo_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_indigo_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_indigo_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_indigo_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_indigo_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -199,13 +279,36 @@
     </style>
 
     <style name="AppTheme.Cyan">
-        <item name="colorPrimary">@color/MaterialColorCyan</item>
-        <item name="colorPrimaryDark">@color/MaterialColorTeal</item>
-        <item name="colorAccent">@color/MaterialColorRed</item>
+        <item name="colorPrimary">@color/md_theme_cyan_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_cyan_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_cyan_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_cyan_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_cyan_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_cyan_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_cyan_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_cyan_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_cyan_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_cyan_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_cyan_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_cyan_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_cyan_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_cyan_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_cyan_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_cyan_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_cyan_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_cyan_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_cyan_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_cyan_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_cyan_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_cyan_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_cyan_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_cyan_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_cyan_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_cyan_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -213,13 +316,36 @@
     </style>
 
     <style name="AppTheme.Green">
-        <item name="colorPrimary">@color/MaterialColorLightGreen</item>
-        <item name="colorPrimaryDark">@color/MaterialColorGreen</item>
-        <item name="colorAccent">@color/MaterialColorPurple</item>
+        <item name="colorPrimary">@color/md_theme_green_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_green_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_green_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_green_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_green_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_green_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_green_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_green_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_green_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_green_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_green_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_green_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_green_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_green_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_green_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_green_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_green_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_green_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_green_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_green_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_green_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_green_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_green_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_green_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_green_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_green_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -227,13 +353,36 @@
     </style>
 
     <style name="AppTheme.Lime">
-        <item name="colorPrimary">@color/MaterialColorLime</item>
-        <item name="colorPrimaryDark">@color/MaterialColorYellow</item>
-        <item name="colorAccent">@color/MaterialColorIndigo</item>
+        <item name="colorPrimary">@color/md_theme_lime_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_lime_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_lime_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_lime_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_lime_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_lime_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_lime_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_lime_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_lime_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_lime_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_lime_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_lime_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_lime_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_lime_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_lime_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_lime_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_lime_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_lime_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_lime_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_lime_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_lime_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_lime_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_lime_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_lime_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_lime_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_lime_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/LightActionBar</item>
-        <item name="android:toolbarStyle">@style/LightActionBar</item>
-        <item name="actionBarStyle">@style/LightActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -241,13 +390,36 @@
     </style>
 
     <style name="AppTheme.Yellow">
-        <item name="colorPrimary">@color/MaterialColorYellow</item>
-        <item name="colorPrimaryDark">@color/MaterialColorAmber</item>
-        <item name="colorAccent">@color/MaterialColorPurple</item>
+        <item name="colorPrimary">@color/md_theme_yellow_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_yellow_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_yellow_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_yellow_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_yellow_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_yellow_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_yellow_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_yellow_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_yellow_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_yellow_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_yellow_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_yellow_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_yellow_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_yellow_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_yellow_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_yellow_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_yellow_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_yellow_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_yellow_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_yellow_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_yellow_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_yellow_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_yellow_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_yellow_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_yellow_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_yellow_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/LightActionBar</item>
-        <item name="android:toolbarStyle">@style/LightActionBar</item>
-        <item name="actionBarStyle">@style/LightActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -255,13 +427,36 @@
     </style>
 
     <style name="AppTheme.Orange">
-        <item name="colorPrimary">@color/MaterialColorOrange</item>
-        <item name="colorPrimaryDark">@color/MaterialColorDeepOrange</item>
-        <item name="colorAccent">@color/MaterialColorBlue</item>
+        <item name="colorPrimary">@color/md_theme_orange_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_orange_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_orange_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_orange_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_orange_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_orange_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_orange_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_orange_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_orange_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_orange_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_orange_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_orange_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_orange_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_orange_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_orange_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_orange_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_orange_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_orange_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_orange_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_orange_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_orange_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_orange_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_orange_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_orange_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_orange_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_orange_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -269,13 +464,36 @@
     </style>
 
     <style name="AppTheme.Gray">
-        <item name="colorPrimary">@color/MaterialColorGrey</item>
-        <item name="colorPrimaryDark">@color/MaterialColorBlueGrey</item>
-        <item name="colorAccent">@color/colorPeterRiver</item>
+        <item name="colorPrimary">@color/md_theme_grey_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_grey_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_grey_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_grey_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_grey_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_grey_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_grey_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_grey_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_grey_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_grey_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_grey_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_grey_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_grey_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_grey_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_grey_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_grey_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_grey_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_grey_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_grey_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_grey_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_grey_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_grey_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_grey_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_grey_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_grey_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_grey_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/LightActionBar</item>
-        <item name="android:toolbarStyle">@style/LightActionBar</item>
-        <item name="actionBarStyle">@style/LightActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -283,13 +501,36 @@
     </style>
 
     <style name="AppTheme.Black">
-        <item name="colorPrimary">@color/colorWetasphalt</item>
-        <item name="colorPrimaryDark">@color/colorMidnightblue</item>
-        <item name="colorAccent">@color/colorEmerland</item>
+        <item name="colorPrimary">@color/md_theme_black_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_black_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_black_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_black_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_black_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_black_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_black_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_black_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_black_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_black_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_black_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_black_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_black_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_black_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_black_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_black_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_black_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_black_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_black_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_black_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_black_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_black_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_black_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_black_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_black_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_black_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -297,13 +538,36 @@
     </style>
 
     <style name="AppTheme.AndroidDefault">
-        <item name="colorPrimary">#6200EE</item>
-        <item name="colorPrimaryDark">#3700B3</item>
-        <item name="colorAccent">#BB86FC</item>
+        <item name="colorPrimary">@color/md_theme_android_default_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_android_default_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_android_default_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_android_default_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_android_default_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_android_default_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_android_default_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_android_default_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_android_default_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_android_default_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_android_default_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_android_default_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_android_default_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_android_default_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_android_default_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_android_default_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_android_default_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_android_default_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_android_default_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_android_default_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_android_default_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_android_default_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_android_default_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_android_default_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_android_default_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_android_default_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -311,13 +575,36 @@
     </style>
 
     <style name="AppTheme.AndroidDefault2">
-        <item name="colorPrimary">#6200EE</item>
-        <item name="colorPrimaryDark">#3700B3</item>
-        <item name="colorAccent">#03DAC5</item>
+        <item name="colorPrimary">@color/md_theme_android_default2_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_android_default2_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_android_default2_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_android_default2_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_android_default2_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_android_default2_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_android_default2_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_android_default2_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_android_default2_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_android_default2_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_android_default2_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_android_default2_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_android_default2_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_android_default2_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_android_default2_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_android_default2_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_android_default2_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_android_default2_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_android_default2_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_android_default2_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_android_default2_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_android_default2_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_android_default2_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_android_default2_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_android_default2_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_android_default2_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -325,13 +612,36 @@
     </style>
 
     <style name="AppTheme.GreenIndigo">
-        <item name="colorPrimary">#4CAF50</item>
-        <item name="colorPrimaryDark">#388E3C</item>
-        <item name="colorAccent">#536DFE</item>
+        <item name="colorPrimary">@color/md_theme_green_indigo_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_green_indigo_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_green_indigo_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_green_indigo_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_green_indigo_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_green_indigo_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_green_indigo_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_green_indigo_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_green_indigo_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_green_indigo_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_green_indigo_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_green_indigo_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_green_indigo_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_green_indigo_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_green_indigo_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_green_indigo_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_green_indigo_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_green_indigo_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_green_indigo_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_green_indigo_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_green_indigo_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_green_indigo_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_green_indigo_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_green_indigo_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_green_indigo_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_green_indigo_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -339,13 +649,36 @@
     </style>
 
     <style name="AppTheme.PureDeepPurple">
-        <item name="colorPrimary">#673AB7</item>
-        <item name="colorPrimaryDark">#512DA8</item>
-        <item name="colorAccent">#7C4DFF</item>
+        <item name="colorPrimary">@color/md_theme_pure_deep_purple_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_pure_deep_purple_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_pure_deep_purple_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_pure_deep_purple_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_pure_deep_purple_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_pure_deep_purple_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_pure_deep_purple_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_pure_deep_purple_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_pure_deep_purple_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_pure_deep_purple_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_pure_deep_purple_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_pure_deep_purple_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_pure_deep_purple_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_pure_deep_purple_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_pure_deep_purple_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_pure_deep_purple_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_pure_deep_purple_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_pure_deep_purple_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_pure_deep_purple_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_pure_deep_purple_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_pure_deep_purple_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_pure_deep_purple_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_pure_deep_purple_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_pure_deep_purple_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_pure_deep_purple_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_pure_deep_purple_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -353,13 +686,36 @@
     </style>
 
     <style name="AppTheme.PurePink">
-        <item name="colorPrimary">#E91E63</item>
-        <item name="colorPrimaryDark">#C2185B</item>
-        <item name="colorAccent">#FF4081</item>
+        <item name="colorPrimary">@color/md_theme_pure_pink_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_pure_pink_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_pure_pink_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_pure_pink_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_pure_pink_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_pure_pink_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_pure_pink_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_pure_pink_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_pure_pink_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_pure_pink_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_pure_pink_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_pure_pink_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_pure_pink_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_pure_pink_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_pure_pink_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_pure_pink_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_pure_pink_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_pure_pink_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_pure_pink_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_pure_pink_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_pure_pink_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_pure_pink_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_pure_pink_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_pure_pink_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_pure_pink_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_pure_pink_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -367,13 +723,36 @@
     </style>
 
     <style name="AppTheme.PureTeal">
-        <item name="colorPrimary">#009688</item>
-        <item name="colorPrimaryDark">#00796B</item>
-        <item name="colorAccent">#009688</item>
+        <item name="colorPrimary">@color/md_theme_pure_teal_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_pure_teal_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_pure_teal_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_pure_teal_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_pure_teal_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_pure_teal_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_pure_teal_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_pure_teal_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_pure_teal_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_pure_teal_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_pure_teal_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_pure_teal_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_pure_teal_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_pure_teal_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_pure_teal_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_pure_teal_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_pure_teal_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_pure_teal_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_pure_teal_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_pure_teal_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_pure_teal_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_pure_teal_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_pure_teal_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_pure_teal_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_pure_teal_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_pure_teal_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -381,13 +760,36 @@
     </style>
 
     <style name="AppTheme.IndigoDeepOrange">
-        <item name="colorPrimary">#3F51B5</item>
-        <item name="colorPrimaryDark">#303F9F</item>
-        <item name="colorAccent">#FF5722</item>
+        <item name="colorPrimary">@color/md_theme_indigo_orange_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_indigo_orange_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_indigo_orange_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_indigo_orange_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_indigo_orange_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_indigo_orange_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_indigo_orange_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_indigo_orange_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_indigo_orange_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_indigo_orange_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_indigo_orange_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_indigo_orange_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_indigo_orange_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_indigo_orange_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_indigo_orange_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_indigo_orange_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_indigo_orange_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_indigo_orange_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_indigo_orange_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_indigo_orange_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_indigo_orange_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_indigo_orange_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_indigo_orange_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_indigo_orange_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_indigo_orange_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_indigo_orange_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -395,13 +797,36 @@
     </style>
 
     <style name="AppTheme.BlueGrayGray">
-        <item name="colorPrimary">#607D8B</item>
-        <item name="colorPrimaryDark">#455A64</item>
-        <item name="colorAccent">#9E9E9E</item>
+        <item name="colorPrimary">@color/md_theme_bluegray_gray_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_bluegray_gray_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_bluegray_gray_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_bluegray_gray_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_bluegray_gray_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_bluegray_gray_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_bluegray_gray_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_bluegray_gray_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_bluegray_gray_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_bluegray_gray_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_bluegray_gray_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_bluegray_gray_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_bluegray_gray_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_bluegray_gray_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_bluegray_gray_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_bluegray_gray_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_bluegray_gray_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_bluegray_gray_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_bluegray_gray_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_bluegray_gray_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_bluegray_gray_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_bluegray_gray_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_bluegray_gray_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_bluegray_gray_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_bluegray_gray_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_bluegray_gray_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -409,13 +834,36 @@
     </style>
 
     <style name="AppTheme.LightGreenGreen">
-        <item name="colorPrimary">#8BC34A</item>
-        <item name="colorPrimaryDark">#689F38</item>
-        <item name="colorAccent">#4CAF50</item>
+        <item name="colorPrimary">@color/md_theme_lightGreen_green_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_lightGreen_green_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_lightGreen_green_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_lightGreen_green_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_lightGreen_green_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_lightGreen_green_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_lightGreen_green_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_lightGreen_green_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_lightGreen_green_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_lightGreen_green_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_lightGreen_green_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_lightGreen_green_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_lightGreen_green_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_lightGreen_green_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_lightGreen_green_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_lightGreen_green_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_lightGreen_green_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_lightGreen_green_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_lightGreen_green_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_lightGreen_green_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_lightGreen_green_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_lightGreen_green_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_lightGreen_green_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_lightGreen_green_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_lightGreen_green_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_lightGreen_green_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -423,13 +871,36 @@
     </style>
 
     <style name="AppTheme.IndigoPink">
-        <item name="colorPrimary">#3F51B5</item>
-        <item name="colorPrimaryDark">#303F9F</item>
-        <item name="colorAccent">#FF4081</item>
+        <item name="colorPrimary">@color/md_theme_indigo_pink_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_indigo_pink_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_indigo_pink_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_indigo_pink_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_indigo_pink_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_indigo_pink_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_indigo_pink_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_indigo_pink_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_indigo_pink_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_indigo_pink_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_indigo_pink_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_indigo_pink_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_indigo_pink_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_indigo_pink_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_indigo_pink_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_indigo_pink_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_indigo_pink_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_indigo_pink_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_indigo_pink_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_indigo_pink_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_indigo_pink_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_indigo_pink_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_indigo_pink_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_indigo_pink_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_indigo_pink_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_indigo_pink_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -437,13 +908,36 @@
     </style>
 
     <style name="AppTheme.PureBrown">
-        <item name="colorPrimary">#795548</item>
-        <item name="colorPrimaryDark">#5D4037</item>
-        <item name="colorAccent">#795548</item>
+        <item name="colorPrimary">@color/md_theme_pure_brown_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_pure_brown_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_pure_brown_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_pure_brown_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_pure_brown_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_pure_brown_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_pure_brown_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_pure_brown_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_pure_brown_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_pure_brown_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_pure_brown_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_pure_brown_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_pure_brown_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_pure_brown_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_pure_brown_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_pure_brown_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_pure_brown_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_pure_brown_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_pure_brown_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_pure_brown_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_pure_brown_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_pure_brown_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_pure_brown_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_pure_brown_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_pure_brown_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_pure_brown_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -451,13 +945,36 @@
     </style>
 
     <style name="AppTheme.IndigoTeal">
-        <item name="colorPrimary">#3F51B5</item>
-        <item name="colorPrimaryDark">#303F9F</item>
-        <item name="colorAccent">#009688</item>
+        <item name="colorPrimary">@color/md_theme_indigo_teal_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_indigo_teal_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_indigo_teal_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_indigo_teal_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_indigo_teal_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_indigo_teal_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_indigo_teal_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_indigo_teal_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_indigo_teal_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_indigo_teal_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_indigo_teal_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_indigo_teal_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_indigo_teal_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_indigo_teal_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_indigo_teal_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_indigo_teal_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_indigo_teal_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_indigo_teal_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_indigo_teal_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_indigo_teal_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_indigo_teal_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_indigo_teal_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_indigo_teal_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_indigo_teal_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_indigo_teal_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_indigo_teal_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->
@@ -465,13 +982,36 @@
     </style>
 
     <style name="AppTheme.IndigoBlueGray">
-        <item name="colorPrimary">#3F51B5</item>
-        <item name="colorPrimaryDark">#303F9F</item>
-        <item name="colorAccent">#607D8B</item>
+        <item name="colorPrimary">@color/md_theme_indigo_blueGray_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_indigo_blueGray_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_indigo_blueGray_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_indigo_blueGray_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_indigo_blueGray_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_indigo_blueGray_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_indigo_blueGray_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_indigo_blueGray_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_indigo_blueGray_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_indigo_blueGray_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_indigo_blueGray_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_indigo_blueGray_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_indigo_blueGray_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_indigo_blueGray_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_indigo_blueGray_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_indigo_blueGray_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_indigo_blueGray_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_indigo_blueGray_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_indigo_blueGray_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_indigo_blueGray_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_indigo_blueGray_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_indigo_blueGray_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_indigo_blueGray_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_indigo_blueGray_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_indigo_blueGray_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_indigo_blueGray_light_primaryInverse</item>
 
-        <item name="android:actionBarStyle">@style/DarkActionBar</item>
-        <item name="android:toolbarStyle">@style/DarkActionBar</item>
-        <item name="actionBarStyle">@style/DarkActionBar</item>
+        <item name="android:actionBarStyle">@style/Material3ActionBar</item>
+        <item name="android:toolbarStyle">@style/Material3ActionBar</item>
+        <item name="actionBarStyle">@style/Material3ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
 
         <!-- 支持库兼容 -->

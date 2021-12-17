@@ -2,7 +2,6 @@ package com.kidozh.discuzhub.activities
 
 import android.app.Activity
 import android.app.ActivityOptions
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -24,6 +23,7 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.model.GlideUrl
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kidozh.discuzhub.R
 import com.kidozh.discuzhub.activities.ui.BlankBBSFragment.BlankBBSFragment
 import com.kidozh.discuzhub.activities.ui.DashBoard.DashBoardFragment
@@ -99,7 +99,7 @@ class DrawerActivity : BaseStatusActivity(), bbsPrivateMessageFragment.OnNewMess
     private fun configureToolbar() {
         setSupportActionBar(binding.toolbar)
         if (supportActionBar != null) {
-            //getSupportActionBar().setDisplayShowTitleEnabled(true);
+            supportActionBar!!.setDisplayShowTitleEnabled(true);
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setHomeButtonEnabled(true)
         }
@@ -115,7 +115,8 @@ class DrawerActivity : BaseStatusActivity(), bbsPrivateMessageFragment.OnNewMess
                 // hide the navIcon
                 // show bbs page
                 binding.toolbar.navigationIcon = null
-                binding.toolbar.title = getString(R.string.app_name)
+                //binding.toolbar.title = getString(R.string.app_name)
+                binding.toolbar.setTitle(R.string.app_name)
 
             } else {
                 // bind to headview
@@ -354,7 +355,8 @@ class DrawerActivity : BaseStatusActivity(), bbsPrivateMessageFragment.OnNewMess
         viewModel.currentBBSInformationMutableLiveData.observe(this, { Discuz: Discuz? ->
             bbsInfo = Discuz
             if (Discuz != null) {
-                binding.toolbarTitle.text = Discuz.site_name
+                binding.toolbar.title = Discuz.site_name
+                //binding.toolbarTitle.text = Discuz.site_name
                 if (supportActionBar != null) {
                     supportActionBar!!.title = Discuz.site_name
                 }
@@ -399,14 +401,17 @@ class DrawerActivity : BaseStatusActivity(), bbsPrivateMessageFragment.OnNewMess
 
 
             } else {
-                binding.toolbarTitle.setText(R.string.no_bbs_found_in_db)
+                binding.toolbar.title = getString(R.string.no_bbs_found_in_db)
+                //binding.toolbarTitle.setText(R.string.no_bbs_found_in_db)
             }
         })
         viewModel.currentForumUserBriefInfoMutableLiveData.observe(this, { User: User? ->
             if (User == null) {
-                binding.toolbarSubtitle.setText(R.string.bbs_anonymous)
+                binding.toolbar.subtitle = getString(R.string.bbs_anonymous)
+                // binding.toolbarSubtitle.setText(R.string.bbs_anonymous)
             } else {
-                binding.toolbarSubtitle.text = User.username
+                binding.toolbar.subtitle = User.username
+                // binding.toolbarSubtitle.text = User.username
             }
             user = User
             renderViewPageAndBtmView()
@@ -498,7 +503,7 @@ class DrawerActivity : BaseStatusActivity(), bbsPrivateMessageFragment.OnNewMess
                         run {
                             val forumInfo = viewModel.currentBBSInformationMutableLiveData.value
                             if (forumInfo != null) {
-                                AlertDialog.Builder(activity)
+                                MaterialAlertDialogBuilder(activity)
                                         .setTitle(getString(R.string.bbs_register_an_account, forumInfo.site_name))
                                         .setMessage(R.string.bbs_register_account_notification)
                                         .setPositiveButton(android.R.string.ok) { _ , _ ->

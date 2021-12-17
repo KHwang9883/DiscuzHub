@@ -17,7 +17,8 @@
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:state_dragged="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -77,10 +78,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:background="@color/ThreadTypeBackgroundColor"
+
+                android:background="?attr/colorPrimaryContainer"
                 android:padding="4dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 app:layout_constraintCircleRadius="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/bbs_post_publisher"

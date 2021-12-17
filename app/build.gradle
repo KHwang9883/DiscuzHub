@@ -9,8 +9,8 @@ android {
         applicationId "net.marioforever.community"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 41
-        versionName "4.11"
+        versionCode 43
+        versionName "5.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
                 discuz_title: "NOT_IMPLEMENTED",
@@ -92,7 +92,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
-    def material_version = '1.4.0'
+    def material_version = '1.6.0-alpha01'
     implementation "com.google.android.material:material:$material_version"
     api "com.google.android.material:material:$material_version"
 
@@ -207,6 +207,11 @@ dependencies {
     }
     // okhttp
     implementation 'com.squareup.okhttp3:okhttp:4.4.0'
+    // larger screen support
+    implementation("androidx.window:window:1.0.0-beta04")
+    implementation("androidx.startup:startup-runtime:1.1.0")
+
+
 
 
 }

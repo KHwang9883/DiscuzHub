@@ -1,12 +1,9 @@
 package com.kidozh.discuzhub.activities
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.Html
-import android.text.SpannableString
 import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
@@ -14,16 +11,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kidozh.discuzhub.R
 import com.kidozh.discuzhub.activities.ForumActivity
 import com.kidozh.discuzhub.adapter.NetworkIndicatorAdapter
@@ -74,14 +69,13 @@ class ForumActivity : BaseStatusActivity(), OnRefreshBtnListener, OnLinkClickedL
         forumViewModel = ViewModelProvider(this)[ForumViewModel::class.java]
         configureIntentData()
         bindViewModel()
+        configureActionBar()
         Log.d(TAG, "Get bbs information $bbsInfo")
         initLiveData()
-        configureActionBar()
+
         configureFab()
-        configureForumInfo()
         configureRecyclerview()
         configureSwipeRefreshLayout()
-        setForumRuleCollapseListener()
         configurePostThreadBtn()
         //  start to get the first page info
         forumViewModel.getNextThreadList()
@@ -180,13 +174,9 @@ class ForumActivity : BaseStatusActivity(), OnRefreshBtnListener, OnLinkClickedL
                     subForumAdapter.setSubForumInfoList(forumResult.forumVariables.subForumLists)
                     val forum = forumResult.forumVariables.forum
                     this@ForumActivity.forum = forum
-                    binding.toolbarTitle.text = forum.name
-                    if (forum.description.isEmpty()) {
-                        binding.toolbarSubtitle.visibility = View.GONE
-                    } else {
-                        binding.toolbarSubtitle.visibility = View.VISIBLE
-                        binding.toolbarSubtitle.text = forum.description
-                    }
+                    binding.toolbar.title = forum.name
+                    binding.toolbar.subtitle = forum.fid.toString()
+
                 }
             })
         forumViewModel.favoriteForumLiveData!!.observe(this, { favoriteForum: FavoriteForum? ->
@@ -205,70 +195,9 @@ class ForumActivity : BaseStatusActivity(), OnRefreshBtnListener, OnLinkClickedL
                         recordViewHistory(forum)
                         hasLoadOnce = true
                     }
-                    if (binding.bbsForumRuleTextview.text != forum.rules) {
-                        val s = forum.rules
-                        if (s != null && s.isNotEmpty()) {
-                            val glideImageGetter =
-                                GlideImageGetter(binding.bbsForumRuleTextview, user)
-                            val htmlTagHandler = GlideImageGetter.HtmlTagHandler(
-                                applicationContext,
-                                binding.bbsForumRuleTextview
-                            )
-                            val sp = Html.fromHtml(s,HtmlCompat.FROM_HTML_MODE_COMPACT, glideImageGetter, htmlTagHandler)
-                            val spannableString = SpannableString(sp)
-                            // binding.bbsForumAlertTextview.setAutoLinkMask(Linkify.ALL);
-                            binding.bbsForumRuleTextview.movementMethod =
-                                bbsLinkMovementMethod(this@ForumActivity)
-                            binding.bbsForumRuleTextview.setText(
-                                spannableString,
-                                TextView.BufferType.SPANNABLE
-                            )
-                            //collapseTextView(binding.bbsForumRuleTextview,3);
-                        } else {
-                            binding.bbsForumRuleTextview.setText(R.string.bbs_rule_not_set)
-                            binding.bbsForumRuleTextview.visibility = View.GONE
-                        }
-                    }
-
-
-                    // for description
-                    if (binding.bbsForumAlertTextview.text != forum.description) {
-                        val s = forum.description
-                        if (s != null && s.isNotEmpty()) {
-                            val glideImageGetter =
-                                GlideImageGetter(binding.bbsForumAlertTextview, user)
-                            val htmlTagHandler = GlideImageGetter.HtmlTagHandler(
-                                applicationContext,
-                                binding.bbsForumRuleTextview
-                            )
-                            val sp = Html.fromHtml(s, HtmlCompat.FROM_HTML_MODE_COMPACT, glideImageGetter, htmlTagHandler)
-                            val spannableString = SpannableString(sp)
-                            // binding.bbsForumAlertTextview.setAutoLinkMask(Linkify.ALL);
-                            binding.bbsForumAlertTextview.movementMethod =
-                                bbsLinkMovementMethod(this@ForumActivity)
-                            binding.bbsForumAlertTextview.setText(
-                                spannableString,
-                                TextView.BufferType.SPANNABLE
-                            )
-                        } else {
-                            binding.bbsForumAlertTextview.setText(R.string.bbs_forum_description_not_set)
-                            binding.bbsForumAlertTextview.visibility = View.GONE
-                        }
-                    }
                 }
             })
-        forumViewModel.ruleTextCollapse.observe(this, { aBoolean: Boolean ->
-            if (aBoolean) {
-                Log.d(TAG, "Collapse rule text $aBoolean")
-                binding.bbsForumRuleTextview.maxLines = 5
-            } else {
-                binding.bbsForumRuleTextview.maxLines = Int.MAX_VALUE
-            }
-        })
-    }
 
-    private fun setForumRuleCollapseListener() {
-        binding.bbsForumRuleTextview.setOnClickListener { forumViewModel.toggleRuleCollapseStatus() }
     }
 
     private fun initLiveData() {
@@ -361,35 +290,32 @@ class ForumActivity : BaseStatusActivity(), OnRefreshBtnListener, OnLinkClickedL
     }
 
     private fun configureActionBar() {
+        binding.toolbar.title = bbsInfo!!.site_name
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
-        binding.toolbarTitle.text = bbsInfo!!.site_name
+        binding.toolbar.title = bbsInfo!!.site_name
+
         if (forum.name != null) {
-            binding.toolbarTitle.text = forum.name
+            binding.toolbar.title = forum.name
             //getSupportActionBar().setSubtitle(forum.name);
         }
     }
 
-    private fun configureForumInfo() {
-        binding.bbsForumThreadNumberTextview.text =
-            numberFormatUtils.getShortNumberText(forum.threads)
-        binding.bbsForumPostNumberTextview.text =
-            numberFormatUtils.getShortNumberText(forum.posts)
-    }
+
 
     private fun configureRecyclerview() {
-        binding.bbsForumSublist.setHasFixedSize(true)
-        binding.bbsForumSublist.itemAnimator = getRecyclerviewAnimation(this)
-        binding.bbsForumSublist.layoutManager = GridLayoutManager(this, 4)
+//        binding.bbsForumSublist.setHasFixedSize(true)
+//        binding.bbsForumSublist.itemAnimator = getRecyclerviewAnimation(this)
+//        binding.bbsForumSublist.layoutManager = GridLayoutManager(this, 4)
         subForumAdapter = SubForumAdapter(bbsInfo, user)
-        binding.bbsForumSublist.adapter = getAnimatedAdapter(this, subForumAdapter)
+//        binding.bbsForumSublist.adapter = getAnimatedAdapter(this, subForumAdapter)
         binding.bbsForumThreadRecyclerview.setHasFixedSize(true)
         binding.bbsForumThreadRecyclerview.itemAnimator = getRecyclerviewAnimation(this)
         val linearLayoutManager = LinearLayoutManager(this)
         binding.bbsForumThreadRecyclerview.layoutManager = linearLayoutManager
         adapter = ThreadAdapter(null, bbsInfo!!, user)
-        concatAdapter = ConcatAdapter(adapter, networkIndicatorAdapter)
+        concatAdapter = ConcatAdapter(subForumAdapter,adapter, networkIndicatorAdapter)
         binding.bbsForumThreadRecyclerview.adapter = getAnimatedAdapter(this, concatAdapter!!)
         binding.bbsForumThreadRecyclerview.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
@@ -505,7 +431,10 @@ class ForumActivity : BaseStatusActivity(), OnRefreshBtnListener, OnLinkClickedL
             R.id.bbs_forum_nav_show_in_external_browser -> {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(currentUrl))
                 Log.d(TAG, "Inputted URL $currentUrl")
-                startActivity(intent)
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+                //startActivity(intent)
                 true
             }
             R.id.bbs_settings -> {
@@ -629,7 +558,7 @@ class ForumActivity : BaseStatusActivity(), OnRefreshBtnListener, OnLinkClickedL
     }
 
     private fun launchFavoriteForumDialog(favoriteForum: FavoriteForum) {
-        val favoriteDialog = AlertDialog.Builder(this)
+        val favoriteDialog = MaterialAlertDialogBuilder(this)
         favoriteDialog.setTitle(R.string.favorite_description)
         val input = EditText(this)
         val lp = LinearLayout.LayoutParams(
