@@ -26,6 +26,7 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.imageview.ShapeableImageView
 import com.kidozh.discuzhub.R
+import com.kidozh.discuzhub.activities.OnThreadAdmined
 import com.kidozh.discuzhub.activities.ThreadActivity
 import com.kidozh.discuzhub.activities.UserProfileActivity
 import com.kidozh.discuzhub.daos.ViewHistoryDao
@@ -68,20 +69,6 @@ class ThreadAdapter(var threadType: Map<String, String>?, var bbsInfo: Discuz, v
         updateList(newThreadList)
     }
 
-//    fun clearList() {
-//        val oldSize = threadList.size
-//        threadList.clear()
-//        notifyItemRangeRemoved(0, oldSize)
-//    }
-
-//    fun addThreadInfoList(threadList: List<Thread>, threadType: Map<String, String>?) {
-//        this.threadType = threadType
-//        val oldSize = this.threadList.size
-//        this.threadList.addAll(threadList)
-//        Log.d(TAG, "Insert to thread adapter starting at " + oldSize + " count " + threadList.size)
-//        notifyItemRangeInserted(oldSize, threadList.size)
-//    }
-
     override fun getItemViewType(position: Int): Int {
         val thread = threadList[position]
         return if (thread.displayOrder <= 0) {
@@ -113,7 +100,7 @@ class ThreadAdapter(var threadType: Map<String, String>?, var bbsInfo: Discuz, v
     }
 
     override fun onBindViewHolder(holderRaw: RecyclerView.ViewHolder, position: Int) {
-        val thread = threadList[position] ?: return
+        val thread = threadList[position]
         if (holderRaw is PinnedViewHolder) {
             val holder = holderRaw
             val sp = Html.fromHtml(thread.subject)
@@ -165,6 +152,11 @@ class ThreadAdapter(var threadType: Map<String, String>?, var bbsInfo: Discuz, v
                 )
                 val bundle = options.toBundle()
                 context.startActivity(intent, bundle)
+            }
+            holder.mCardview.setOnLongClickListener {
+                VibrateUtils.vibrateForNotice(context)
+                this.onlongPressCard(position)
+                true
             }
         } else if (holderRaw is ThreadViewHolder) {
             val holder = holderRaw
@@ -302,6 +294,11 @@ class ThreadAdapter(var threadType: Map<String, String>?, var bbsInfo: Discuz, v
                 val bundle = options.toBundle()
                 context.startActivity(intent, bundle)
             }
+            holder.mCardview.setOnLongClickListener {
+                VibrateUtils.vibrateForNotice(context)
+                this.onlongPressCard(position)
+                true
+            }
             holder.mAvatarImageview.setOnClickListener {
                 val intent = Intent(context, UserProfileActivity::class.java)
                 intent.putExtra(ConstUtils.PASS_BBS_ENTITY_KEY, bbsInfo)
@@ -313,12 +310,11 @@ class ThreadAdapter(var threadType: Map<String, String>?, var bbsInfo: Discuz, v
                 context.startActivity(intent, bundle)
             }
         } else if (holderRaw is ConciseThreadViewHolder) {
-            val holder = holderRaw
             val sp = Html.fromHtml(thread.subject)
             val spannableString = SpannableString(sp)
-            holder.mTitle.setText(spannableString, TextView.BufferType.SPANNABLE)
-            holder.mThreadReplyNum.text = numberFormatUtils.getShortNumberText(thread.replies)
-            holder.mPublishDate.text = getLocalePastTimeString(context, thread.publishAt!!)
+            holderRaw.mTitle.setText(spannableString, TextView.BufferType.SPANNABLE)
+            holderRaw.mThreadReplyNum.text = numberFormatUtils.getShortNumberText(thread.replies)
+            holderRaw.mPublishDate.text = getLocalePastTimeString(context, thread.publishAt!!)
 
             //holder.mPublishDate.setText(df.format(threadInfo.publishAt));
             if (thread.displayOrder != 0) {
@@ -333,40 +329,49 @@ class ThreadAdapter(var threadType: Map<String, String>?, var bbsInfo: Discuz, v
                     -4 -> R.string.display_order_n4
                     else -> R.string.bbs_forum_pinned
                 }
-                holder.mThreadType.setText(textResource)
-                holder.mThreadType.setTextColor(context.getColor(R.color.colorAccent))
-                holder.mThreadType.visibility = View.VISIBLE
+                holderRaw.mThreadType.setText(textResource)
+                holderRaw.mThreadType.setTextColor(context.getColor(R.color.colorAccent))
+                holderRaw.mThreadType.visibility = View.VISIBLE
             } else {
-                holder.mThreadType.visibility = View.GONE
+                holderRaw.mThreadType.visibility = View.GONE
             }
             var avatar_num = thread.authorId % 16
             if (avatar_num < 0) {
                 avatar_num = -avatar_num
             }
-            val avatarResource = context.resources.getIdentifier(String.format("avatar_%s", avatar_num + 1), "drawable", context.packageName)
+            val avatarResource = context.resources.getIdentifier(
+                String.format("avatar_%s", avatar_num + 1),
+                "drawable",
+                context.packageName
+            )
             val factory = OkHttpUrlLoader.Factory(NetworkUtils.getPreferredClient(context))
-            Glide.get(context).registry.replace(GlideUrl::class.java, InputStream::class.java, factory)
+            Glide.get(context).registry.replace(
+                GlideUrl::class.java,
+                InputStream::class.java,
+                factory
+            )
             val source = URLUtils.getDefaultAvatarUrlByUid(thread.authorId)
             val options = RequestOptions()
-                    .placeholder(context.getDrawable(avatarResource))
-                    .error(context.getDrawable(avatarResource))
-            val glideUrl = GlideUrl(source,
-                    LazyHeaders.Builder().addHeader("referer", bbsInfo.base_url).build()
+                .placeholder(context.getDrawable(avatarResource))
+                .error(context.getDrawable(avatarResource))
+            val glideUrl = GlideUrl(
+                source,
+                LazyHeaders.Builder().addHeader("referer", bbsInfo.base_url).build()
             )
             if (NetworkUtils.canDownloadImageOrFile(context)) {
                 Glide.with(context)
-                        .load(glideUrl)
-                        .apply(options)
-                        .into(holder.mAvatarImageview)
+                    .load(glideUrl)
+                    .apply(options)
+                    .into(holderRaw.mAvatarImageview)
             } else {
                 Glide.with(context)
-                        .load(glideUrl)
-                        .apply(options)
-                        .onlyRetrieveFromCache(true)
-                        .into(holder.mAvatarImageview)
+                    .load(glideUrl)
+                    .apply(options)
+                    .onlyRetrieveFromCache(true)
+                    .into(holderRaw.mAvatarImageview)
             }
-            holder.mThreadPublisher.text = thread.author
-            holder.mCardview.setOnClickListener {
+            holderRaw.mThreadPublisher.text = thread.author
+            holderRaw.mCardview.setOnClickListener {
                 val intent = Intent(context, ThreadActivity::class.java)
                 intent.putExtra(ConstUtils.PASS_BBS_ENTITY_KEY, bbsInfo)
                 intent.putExtra(ConstUtils.PASS_BBS_USER_KEY, userBriefInfo)
@@ -375,13 +380,21 @@ class ThreadAdapter(var threadType: Map<String, String>?, var bbsInfo: Discuz, v
                 intent.putExtra("TID", thread.tid)
                 intent.putExtra("SUBJECT", thread.subject)
                 VibrateUtils.vibrateForClick(context)
-                val options = ActivityOptions.makeSceneTransitionAnimation(context as Activity?,
-                        Pair.create(holder.mTitle, "bbs_thread_subject")
+                val options = ActivityOptions.makeSceneTransitionAnimation(
+                    context as Activity?,
+                    Pair.create(holderRaw.mTitle, "bbs_thread_subject")
                 )
                 val bundle = options.toBundle()
                 context.startActivity(intent, bundle)
             }
+
+            holderRaw.mCardview.setOnLongClickListener {
+                VibrateUtils.vibrateForNotice(context)
+                this.onlongPressCard(position)
+                true
+            }
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -450,6 +463,15 @@ class ThreadAdapter(var threadType: Map<String, String>?, var bbsInfo: Discuz, v
             mThreadType = itemView.findViewById(R.id.bbs_thread_type)
             mAvatarImageview = itemView.findViewById(R.id.bbs_post_avatar_imageView)
             mCardview = itemView.findViewById(R.id.bbs_thread_cardview)
+        }
+    }
+
+
+
+    fun onlongPressCard(position: Int){
+        if (context is OnThreadAdmined){
+            val mlistener: OnThreadAdmined = context as OnThreadAdmined
+            mlistener.adminThread(threadList[position])
         }
     }
 

@@ -54,6 +54,7 @@ import com.kidozh.discuzhub.adapter.ThreadCountAdapter.OnRecommendBtnPressed
 import com.kidozh.discuzhub.adapter.ThreadPropertiesAdapter.OnThreadPropertyClicked
 import com.kidozh.discuzhub.database.ViewHistoryDatabase
 import com.kidozh.discuzhub.databinding.ActivityViewThreadBinding
+import com.kidozh.discuzhub.dialogs.AdminPostDialogFragment
 import com.kidozh.discuzhub.dialogs.ReportPostDialogFragment
 import com.kidozh.discuzhub.dialogs.ReportPostDialogFragment.ReportDialogListener
 import com.kidozh.discuzhub.entities.*
@@ -74,7 +75,10 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
-class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilterChanged, onAdapterReply, OnLinkClicked, bbsPollFragment.OnFragmentInteractionListener, OnThreadPropertyClicked, OnAdvanceOptionClicked, ReportDialogListener, OnRefreshBtnListener, OnRecommendBtnPressed {
+class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction,
+    onFilterChanged, onAdapterReply, OnLinkClicked, bbsPollFragment.OnFragmentInteractionListener,
+    OnThreadPropertyClicked, OnAdvanceOptionClicked, ReportDialogListener, OnRefreshBtnListener,
+    OnRecommendBtnPressed, OnPostAdmined {
     lateinit var binding: ActivityViewThreadBinding
     var subject: String? = null
     var tid = 0
@@ -84,7 +88,6 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
     lateinit var countAdapter: ThreadCountAdapter
     var formHash: String = ""
     var forum: Forum? = null
-    lateinit var discuz: Discuz
     lateinit var thread: Thread
     private var hasLoadOnce = false
     private var notifyLoadAll = false
@@ -131,13 +134,13 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
         subject = intent.getStringExtra("SUBJECT")
         // hasLoadOnce = intent.getBooleanExtra(bbsConstUtils.PASS_IS_VIEW_HISTORY,false);
         URLUtils.setBBS(discuz)
-        threadDetailViewModel.setBBSInfo(discuz, user, forum, tid)
-        smileyViewModel.configureDiscuz(discuz, user)
-        val sp = Html.fromHtml(thread!!.subject, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        threadDetailViewModel.setBBSInfo(discuz!!, user, forum, tid)
+        smileyViewModel.configureDiscuz(discuz!!, user)
+        val sp = Html.fromHtml(thread.subject, HtmlCompat.FROM_HTML_MODE_LEGACY)
         val spannableString = SpannableString(sp)
         binding.bbsThreadSubject.setText(spannableString, TextView.BufferType.SPANNABLE)
         smileyViewPagerAdapter = SmileyViewPagerAdapter(supportFragmentManager,
-                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,discuz,this)
+                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, discuz!!,this)
     }
 
     private fun initThreadStatus() {
@@ -444,6 +447,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
 
         threadDetailViewModel.threadPostResultMutableLiveData.observe(this, { threadResult ->
             if (threadResult != null) {
+                this.setBaseResult(threadResult, threadResult.threadPostVariables)
                 if (threadResult.threadPostVariables.detailedThreadInfo.subject != null) {
                     val sp = Html.fromHtml(threadResult.threadPostVariables.detailedThreadInfo.subject,HtmlCompat.FROM_HTML_MODE_COMPACT)
                     val spannableString = SpannableString(sp)
@@ -457,16 +461,18 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
 
                         val recordHistory = UserPreferenceUtils.viewHistoryEnabled(this)
                         if (recordHistory) {
-                            insertViewHistory(ViewHistory(
+                            discuz?.let {
+                                ViewHistory(
                                     URLUtils.getDefaultAvatarUrlByUid(detailedThreadInfo.authorId),
                                     detailedThreadInfo.author,
-                                    discuz.id,
+                                    it.id,
                                     detailedThreadInfo.subject,
                                     ViewHistory.VIEW_TYPE_THREAD,
                                     detailedThreadInfo.fid,
                                     tid,
                                     Date()
-                            ))
+                                )
+                            }?.let { insertViewHistory(it) }
                         }
                     }
                 }
@@ -639,7 +645,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
 
     private fun getAndSaveRewriteRule(rewriteRule: Map<String, String>, key: String) {
         if (rewriteRule.containsKey(key)) {
-            UserPreferenceUtils.saveRewriteRule(this, discuz, key, rewriteRule[key])
+            discuz?.let { UserPreferenceUtils.saveRewriteRule(this, it, key, rewriteRule[key]) }
         }
     }
 
@@ -856,7 +862,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
                 intent.putExtra(ConstUtils.PASS_FORUM_THREAD_KEY, clickedForum)
                 intent.putExtra(ConstUtils.PASS_BBS_ENTITY_KEY, discuz)
                 intent.putExtra(ConstUtils.PASS_BBS_USER_KEY, user)
-                Log.d(TAG, "put base url " + discuz.base_url)
+
                 VibrateUtils.vibrateForClick(this)
                 startActivity(intent)
                 return
@@ -926,18 +932,30 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
                 Log.i(TAG,"new judge ${Build.VERSION.SDK_INT >= Build.VERSION_CODES.O} ${rewriteRules}")
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     // load from cache if not exist
-                    val displayForumRewriteRule = UserPreferenceUtils.getRewriteRule(context,discuz, rewriteKey = UserPreferenceUtils.REWRITE_FORM_DISPLAY_KEY)
+                    val displayForumRewriteRule =
+                        discuz?.let {
+                            UserPreferenceUtils.getRewriteRule(context,
+                                it, rewriteKey = UserPreferenceUtils.REWRITE_FORM_DISPLAY_KEY)
+                        }
                     if ((rewriteRules == null || !rewriteRules.containsKey("forum_forumdisplay"))&&displayForumRewriteRule!=null){
 
                         rewriteRules?.put("forum_forumdisplay", displayForumRewriteRule)
                     }
 
-                    val viewThreadRewriteRule = UserPreferenceUtils.getRewriteRule(context,discuz, rewriteKey = UserPreferenceUtils.REWRITE_VIEW_THREAD_KEY)
+                    val viewThreadRewriteRule =
+                        discuz?.let {
+                            UserPreferenceUtils.getRewriteRule(context,
+                                it, rewriteKey = UserPreferenceUtils.REWRITE_VIEW_THREAD_KEY)
+                        }
                     if ((rewriteRules == null || !rewriteRules.containsKey("forum_viewthread") )&&viewThreadRewriteRule!=null){
                         rewriteRules?.put("forum_viewthread", viewThreadRewriteRule)
                     }
 
-                    val homeSpaceRewriteRule = UserPreferenceUtils.getRewriteRule(context,discuz, rewriteKey = UserPreferenceUtils.REWRITE_HOME_SPACE)
+                    val homeSpaceRewriteRule =
+                        discuz?.let {
+                            UserPreferenceUtils.getRewriteRule(context,
+                                it, rewriteKey = UserPreferenceUtils.REWRITE_HOME_SPACE)
+                        }
                     if ((rewriteRules == null || !rewriteRules.containsKey("home_space")) && homeSpaceRewriteRule!=null){
 
                         rewriteRules?.put("home_space", homeSpaceRewriteRule)
@@ -948,7 +966,10 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
                     if (rewriteRules != null) {
                         if (rewriteRules.containsKey("forum_forumdisplay")) {
                             var rewriteRule = rewriteRules["forum_forumdisplay"]
-                            UserPreferenceUtils.saveRewriteRule(context, discuz, UserPreferenceUtils.REWRITE_FORM_DISPLAY_KEY, rewriteRule)
+                            discuz?.let {
+                                UserPreferenceUtils.saveRewriteRule(context,
+                                    it, UserPreferenceUtils.REWRITE_FORM_DISPLAY_KEY, rewriteRule)
+                            }
                             if (rewriteRule == null || clickedURLPath == null) {
                                 parseURLAndOpen(unescapedURL)
                                 return
@@ -978,7 +999,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
                                     intent.putExtra(ConstUtils.PASS_FORUM_THREAD_KEY, clickedForum)
                                     intent.putExtra(ConstUtils.PASS_BBS_ENTITY_KEY, discuz)
                                     intent.putExtra(ConstUtils.PASS_BBS_USER_KEY, user)
-                                    Log.d(TAG, "put base url " + discuz.base_url)
+                                    Log.d(TAG, "put base url " + discuz!!.base_url)
                                     VibrateUtils.vibrateForClick(context)
                                     context.startActivity(intent)
                                     return
@@ -990,7 +1011,10 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
                         if (rewriteRules.containsKey("forum_viewthread")) {
                             // match template such as t{tid}-{page}-{prevpage}
                             var rewriteRule = rewriteRules["forum_viewthread"]
-                            UserPreferenceUtils.saveRewriteRule(context, discuz, UserPreferenceUtils.REWRITE_VIEW_THREAD_KEY, rewriteRule)
+                            discuz?.let {
+                                UserPreferenceUtils.saveRewriteRule(context,
+                                    it, UserPreferenceUtils.REWRITE_VIEW_THREAD_KEY, rewriteRule)
+                            }
                             if (rewriteRule == null || clickedURLPath == null) {
                                 parseURLAndOpen(unescapedURL)
                                 return
@@ -1037,7 +1061,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
                             // match template such as t{tid}-{page}-{prevpage}
                             var rewriteRule = rewriteRules["home_space"]
                             Log.d(TAG, "get home space url $rewriteRule")
-                            UserPreferenceUtils.saveRewriteRule(context, discuz, UserPreferenceUtils.REWRITE_HOME_SPACE, rewriteRule)
+                            UserPreferenceUtils.saveRewriteRule(context, discuz!!, UserPreferenceUtils.REWRITE_HOME_SPACE, rewriteRule)
                             if (rewriteRule == null || clickedURLPath == null) {
                                 parseURLAndOpen(unescapedURL)
                                 return
@@ -1157,7 +1181,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
         binding.postsRecyclerview.itemAnimator = getRecyclerviewAnimation(this)
         val status = threadDetailViewModel.threadStatusMutableLiveData.value as ViewThreadQueryStatus
 
-        postAdapter = PostAdapter(discuz,user,status)
+        postAdapter = PostAdapter(discuz!!,user,status)
 
         concatAdapter = ConcatAdapter(postAdapter, networkIndicatorAdapter)
         binding.postsRecyclerview.adapter = getAnimatedAdapter(this, concatAdapter)
@@ -1456,7 +1480,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
         input.layoutParams = lp
         favoriteDialog.setView(input)
         favoriteDialog.setPositiveButton(android.R.string.ok) { _, _ ->
-            var description: String? = input.text.toString()
+            var description: String = input.text.toString()
             description = if (TextUtils.isEmpty(description)) "" else description
             threadDetailViewModel.favoriteThread(favoriteThread,true,description)
         }
@@ -1552,7 +1576,7 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
                 val result = threadDetailViewModel.threadPostResultMutableLiveData.value
                 if (result != null) {
                     val detailedThreadInfo = result.threadPostVariables.detailedThreadInfo
-                    val favoriteThread = detailedThreadInfo.toFavoriteThread(discuz.id, if (user != null) user!!.uid else 0)
+                    val favoriteThread = detailedThreadInfo.toFavoriteThread(discuz!!.id, if (user != null) user!!.uid else 0)
                     // save it to the database
                     // boolean isFavorite = threadDetailViewModel.isFavoriteThreadMutableLiveData.getValue();
                     val favoriteThreadInDB = threadDetailViewModel.favoriteThreadLiveData.value
@@ -1667,5 +1691,33 @@ class ThreadActivity : BaseStatusActivity(), OnSmileyPressedInteraction, onFilte
         private val TAG = ThreadActivity::class.java.simpleName
     }
 
+    override fun adminPost(post: Post) {
+        VibrateUtils.vibrateForError(this)
+        if(threadDetailViewModel.threadPostResultMutableLiveData.value?.threadPostVariables?.moderator?.equals(true) == true && user!= null){
+            val threadVariable = threadDetailViewModel.threadPostResultMutableLiveData.value!!.threadPostVariables
+            val adminThreadDialogFragment = AdminPostDialogFragment(discuz!!, user!!, threadVariable.fid,threadVariable.detailedThreadInfo.tid,post, threadDetailViewModel.threadPostResultMutableLiveData.value?.threadPostVariables!!.formHash)
+            adminThreadDialogFragment.show(supportFragmentManager, adminThreadDialogFragment.tag)
+        }
+        else{
+            Toasty.info(this,getString(R.string.no_admin_rights),Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onPostSuccessfullyAdmined(newPost: Post) {
+        val newPostList = postAdapter.postList.toMutableList()
+        for((index, post) in postAdapter.postList.withIndex()){
+            if(newPost.pid == post.pid){
+                newPostList[index] = newPost
+                postAdapter.postList = newPostList
+                postAdapter.notifyItemChanged(index)
+            }
+        }
+    }
+
 }
 
+
+interface OnPostAdmined{
+    fun adminPost(post: Post)
+    fun onPostSuccessfullyAdmined(newPost: Post)
+}
