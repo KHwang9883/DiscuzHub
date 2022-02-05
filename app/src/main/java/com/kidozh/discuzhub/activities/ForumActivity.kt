@@ -95,7 +95,7 @@ class ForumActivity : BaseStatusActivity(), OnRefreshBtnListener, OnLinkClickedL
     }
 
     private fun bindViewModel() {
-        forumViewModel.totalThreadListMutableLiveData.observe(this, {
+        forumViewModel.totalThreadListMutableLiveData.observe(this) {
             var threadTypeMap: HashMap<String, String> = HashMap()
             if (forumViewModel.displayForumResultMutableLiveData.value != null &&
                 forumViewModel.displayForumResultMutableLiveData.value!!.forumVariables.threadTypeInfo != null
@@ -111,8 +111,8 @@ class ForumActivity : BaseStatusActivity(), OnRefreshBtnListener, OnLinkClickedL
                     binding.bbsForumThreadRecyclerview.smoothScrollToPosition(0)
                 }
             }
-        })
-        forumViewModel.networkState.observe(this, { integer: Int ->
+        }
+        forumViewModel.networkState.observe(this) { integer: Int ->
             Log.d(TAG, "Network state changed $integer")
             when (integer) {
                 ConstUtils.NETWORK_STATUS_LOADING -> {
@@ -147,40 +147,57 @@ class ForumActivity : BaseStatusActivity(), OnRefreshBtnListener, OnLinkClickedL
                     binding.bbsForumInfoSwipeRefreshLayout.isRefreshing = false
                 }
             }
-        })
+        }
         forumViewModel.errorMessageMutableLiveData.observe(
-            this,
-            { errorMessage: ErrorMessage? ->
-                Log.d(TAG, "recv error message $errorMessage")
-                if (errorMessage != null) {
-                    Toasty.error(
-                        applicationContext,
-                        getString(
-                            R.string.discuz_api_message_template,
-                            errorMessage.key,
-                            errorMessage.content
-                        ),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    networkIndicatorAdapter.setErrorStatus(errorMessage)
-                    VibrateUtils.vibrateForError(application)
-                }
-            })
+            this
+        ) { errorMessage: ErrorMessage? ->
+            Log.d(TAG, "recv error message $errorMessage")
+            if (errorMessage != null) {
+                Toasty.error(
+                    applicationContext,
+                    getString(
+                        R.string.discuz_api_message_template,
+                        errorMessage.key,
+                        errorMessage.content
+                    ),
+                    Toast.LENGTH_LONG
+                ).show()
+                networkIndicatorAdapter.setErrorStatus(errorMessage)
+                VibrateUtils.vibrateForError(application)
+            }
+        }
         forumViewModel.displayForumResultMutableLiveData.observe(
-            this,
-            { forumResult -> // deal with sublist
-                Log.d(TAG, "GET result $forumResult")
-                if (forumResult != null) {
-                    Log.d(TAG, "GET sublist size " + forumResult.forumVariables.subForumLists.size)
-                    subForumAdapter.setSubForumInfoList(forumResult.forumVariables.subForumLists)
-                    val forum = forumResult.forumVariables.forum
-                    this@ForumActivity.forum = forum
-                    binding.toolbar.title = forum.name
-                    binding.toolbar.subtitle = forum.fid.toString()
-                    this.setBaseResult(forumResult, forumResult.forumVariables)
-
+            this
+        ) { forumResult -> // deal with sublist
+            Log.d(TAG, "GET result $forumResult")
+            if(forumResult != null && forumResult.forumVariables.forum.redirectURL.isNotBlank()){
+                // redirect to this
+                    val redirectURL = forumResult.forumVariables.forum.redirectURL
+                Toasty.info(this,getString(R.string.forum_redirect_url,redirectURL),Toast.LENGTH_LONG).show()
+                networkIndicatorAdapter.setErrorStatus(ErrorMessage(getString(R.string.forum_redirect_title), getString(R.string.forum_redirect_url,redirectURL)))
+                // trigger intent
+                try{
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = Uri.parse(redirectURL)
+                    startActivity(i)
                 }
-            })
+                catch (e: Exception){
+                    e.printStackTrace()
+                }
+
+
+            }
+            if (forumResult != null) {
+                Log.d(TAG, "GET sublist size " + forumResult.forumVariables.subForumLists.size)
+                subForumAdapter.setSubForumInfoList(forumResult.forumVariables.subForumLists)
+                val forum = forumResult.forumVariables.forum
+                this@ForumActivity.forum = forum
+                binding.toolbar.title = forum.name
+                binding.toolbar.subtitle = forum.fid.toString()
+                this.setBaseResult(forumResult, forumResult.forumVariables)
+
+            }
+        }
         forumViewModel.favoriteForumLiveData!!.observe(this, { favoriteForum: FavoriteForum? ->
             Log.d(TAG, "Detecting change favorite forum $favoriteForum")
             if (favoriteForum != null) {
@@ -674,7 +691,7 @@ class ForumActivity : BaseStatusActivity(), OnRefreshBtnListener, OnLinkClickedL
                 } catch (e: IOException) {
                     e.printStackTrace()
                     messageResult = MessageResult()
-                    messageResult!!.content = e.message
+                    messageResult!!.content = e.message!!
                     messageResult!!.key = e.toString()
                     // insert as local database
                     if (favorite) {

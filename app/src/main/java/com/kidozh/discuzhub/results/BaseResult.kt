@@ -1,6 +1,7 @@
 package com.kidozh.discuzhub.results
 
 import android.text.TextUtils
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.kidozh.discuzhub.activities.BaseStatusActivity
@@ -12,16 +13,20 @@ open class BaseResult {
     var apiVersion: Int = 4
 
     @JsonProperty("Charset")
-    var Charset: String = "UTF-8"
+    var charset: String = "UTF-8"
 
+    @JsonIgnore
     fun getCharsetType():Int{
-        if (Charset == "GBK") {
-            return BaseStatusActivity.CHARSET_GBK
-        } else if (Charset == "BIG5") {
-            return BaseStatusActivity.CHARSET_BIG5
-        }
-        else{
-            return BaseStatusActivity.CHARSET_UTF8
+        return when (charset) {
+            "GBK" -> {
+                BaseStatusActivity.CHARSET_GBK
+            }
+            "BIG5" -> {
+                BaseStatusActivity.CHARSET_BIG5
+            }
+            else -> {
+                BaseStatusActivity.CHARSET_UTF8
+            }
         }
     }
 
@@ -33,6 +38,7 @@ open class BaseResult {
     @JvmField
     @JsonIgnoreProperties(ignoreUnknown = true)
     var error = ""
+    @JsonIgnore
     open fun isError(): Boolean {
         return message != null || !TextUtils.isEmpty(error)
     }

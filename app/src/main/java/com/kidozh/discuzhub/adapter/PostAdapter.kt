@@ -136,7 +136,7 @@ class PostAdapter(private val discuz: Discuz, private val user: User?, viewThrea
         while (iterator.hasNext()) {
             val post = iterator.next()
             // remove nullable message
-            if (post.message == "") {
+            if (post.message == "" && iterator.hasNext()) {
                 iterator.remove()
             }
         }
