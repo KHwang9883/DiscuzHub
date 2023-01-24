@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.kidozh.discuzhub">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <dist:module dist:instant="true" />
 
@@ -12,6 +11,31 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="20" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <data android:scheme="http" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+
+            <data android:scheme="tel" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+
+            <data android:mimeType="*/*" />
+        </intent>
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -21,11 +45,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:targetApi="n">
+        >
+        <activity
+            android:name=".activities.PushTokenActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.ShortcutActivity"
-            android:label="@string/short_cut_activity_title"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/short_cut_activity_title" />
         <activity
             android:name=".activities.PortalActivity"
             android:exported="true">
@@ -44,7 +71,9 @@
         <activity android:name=".activities.AddIntroActivity" />
         <activity android:name=".activities.AboutAppActivity" />
         <activity android:name=".activities.InternalWebViewActivity" />
-        <activity android:name=".activities.ThreadDraftActivity" android:label="@string/bbs_draft_box"/>
+        <activity
+            android:name=".activities.ThreadDraftActivity"
+            android:label="@string/bbs_draft_box" />
         <activity android:name=".activities.UserProfileActivity" />
         <activity android:name=".activities.PrivateMessageActivity" />
         <activity
@@ -69,7 +98,9 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginActivity" android:label="@string/bbs_login"/>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/bbs_login" />
         <activity
             android:name=".activities.FullImageActivity"
             android:colorMode="wideColorGamut"
@@ -78,7 +109,7 @@
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_global_settings" />
         <activity android:name=".activities.ForumActivity" />
-        <activity android:name=".activities.ThreadActivity" />
+        <activity android:name=".activities.ThreadActivity" android:exported="true" />
         <activity android:name=".activities.ThreadPageActivity" />
         <activity android:name=".activities.SplashScreenActivity" />
         <activity android:name=".activities.PublishActivity" />
@@ -97,37 +128,41 @@
         <meta-data
             android:name="discuz_title"
             android:value="${discuz_title}" />
-        
-        <provider
-            android:authorities="${applicationId}.androidx-startup"
-            android:name="androidx.startup.InitializationProvider"
-            android:exported="false"
-            tools:node="merge"
-            >
-            <meta-data android:name="com.kidozh.discuzhub.embedding.TabletWindowInitializer"
-                android:value="androidx.startup"/>
-        </provider>
-    </application>
 
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="https" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="http" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.DIAL" />
-            <data android:scheme="tel" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.SEND" />
-            <data android:mimeType="*/*" />
-        </intent>
-    </queries>
-    
-    
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.kidozh.discuzhub.embedding.TabletWindowInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <service
+            android:name=".services.FirebasePushService"
+            android:directBootAware="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="firebase_channel"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification_task_24px" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
+
+    </application>
 
 </manifest>
